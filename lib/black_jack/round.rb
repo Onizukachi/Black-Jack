@@ -24,7 +24,7 @@ module BlackJack
     end
 
     def result
-      return nil if players.map(&:scores).uniq.size == 1
+      return nil if draw?
 
       determine_winner
     end
@@ -71,6 +71,10 @@ module BlackJack
       return valid_players.max_by(&:scores) if valid_players.any?
 
       players.min_by(&:scores)
+    end
+
+    def draw?
+      players.map(&:scores).uniq.size == 1
     end
   end
 end
