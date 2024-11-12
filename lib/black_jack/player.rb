@@ -20,7 +20,7 @@ module BlackJack
 
     # @return [Symbol] will be one of the following values [:skip, :take_card, :show_cards]
     def make_move
-      cards.count < 3 && scores < 17 ? :take_card : :skip
+      card_size < 3 && scores < 17 ? :take_card : :skip
     end
 
     def take_card(card)

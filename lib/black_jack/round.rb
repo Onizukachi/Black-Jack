@@ -46,12 +46,7 @@ module BlackJack
 
     def handle_decision(decision, player)
       case decision
-      when :take_card
-        if player.card_size > 2
-          Interface.exceed_card_limit
-        else
-          player.take_card(deck.give_card)
-        end
+      when :take_card then player.take_card(deck.give_card)
       when :show_cards then finish!
       when :skip then nil
       end

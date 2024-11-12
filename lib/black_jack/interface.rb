@@ -26,13 +26,11 @@ module BlackJack
         gets.chomp
       end
 
-      def choose_action
-        puts <<~TEXT
-          Выберите действие
-            1. Пропустить ход
-            2. Добавить карту
-            3. Открыть карты
-        TEXT
+      def choose_action(player)
+        puts 'Выберите действие'
+        puts '1. Пропустить ход'
+        puts '2. Добавить карту' if player.card_size < 3
+        puts '3. Открыть карты'
 
         gets.chomp.to_i
       end
