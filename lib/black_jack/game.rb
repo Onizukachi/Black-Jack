@@ -39,12 +39,6 @@ module BlackJack
       @round = Round.new(players, deck)
     end
 
-    def display_status_bar
-      Interface.open_player_status(user)
-      round_finished? ? Interface.open_player_status(dealer) : Interface.hidden_player_status(dealer)
-      Interface.separator
-    end
-
     def process_round_result(winner)
       winner ? process_winner(winner) : process_draw
 
