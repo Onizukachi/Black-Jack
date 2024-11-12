@@ -23,19 +23,18 @@ module BlackJack
 
       def username
         puts 'Введите ваше имя:'
+        gets.chomp
       end
 
-      def actions
+      def choose_action
         puts <<~TEXT
           Выберите действие
             1. Пропустить ход
             2. Добавить карту
             3. Открыть карты
         TEXT
-      end
 
-      def invalid_choice
-        puts 'Такого действия не сущестует'
+        gets.chomp.to_i
       end
 
       def open_player_status(player)
@@ -50,23 +49,20 @@ module BlackJack
       end
 
       def draw
-        puts 'У вас ничья с дилером!'
+        puts 'В результате раунда получилась ничья :)'
       end
 
-      def user_win
-        puts 'Поздравляем! Вы выиграли раунд'
+      def winner(name)
+        puts "Победителем этого раунда становится #{name}"
       end
 
-      def user_lose
-        puts 'Упс! Вы проирали'
-      end
-
-      def repeat_round
+      def continue
         puts 'Желаете сыграть еще раз? (Введите yes если согласны)'
+        gets.chomp
       end
 
       def exceed_card_limit
-        puts 'Увы, но вас уже максимальное количество карт'
+        puts 'Увы, но вас уже максимальное количество карт. Поэтому вы пропускаете ход!'
       end
 
       private

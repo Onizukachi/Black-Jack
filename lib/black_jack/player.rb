@@ -10,6 +10,19 @@ module BlackJack
       @cards = []
     end
 
+    def show_status(hidden: false)
+      hidden ? Interface.hidden_player_status(self) : Interface.open_player_status(self)
+    end
+
+    def card_size
+      cards.size
+    end
+
+    # @return [Symbol] will be one of the following values [:skip, :take_card, :show_cards]
+    def make_move
+      cards.count < 3 && scores < 17 ? :take_card : :skip
+    end
+
     def take_card(card)
       cards.push(card)
     end
