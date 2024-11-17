@@ -8,18 +8,10 @@ module BlackJack
     attr_reader :cards
 
     def initialize
-      @cards = generate_cards
+      @cards = generate_cards.shuffle!
     end
 
-    def shuffle!
-      cards.shuffle!
-
-      self
-    end
-
-    def give_card
-      cards.shift
-    end
+    def give_card = cards.shift
 
     def generate_cards
       SUITS.product(RANKS).map do |suit, rank|

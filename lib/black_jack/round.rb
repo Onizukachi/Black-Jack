@@ -1,16 +1,17 @@
 module BlackJack
   class Round
-    attr_reader :players, :deck, :status
+    attr_reader :players, :deck
 
     def initialize(players, deck)
       @players = players
       @deck = deck
-      @status = 0
+      @finished = false
     end
 
-    def start
+    def play
+      prepare_players
+
       loop do
-        Interface.clear
         status_bar
 
         players.each do |player|
@@ -19,57 +20,40 @@ module BlackJack
           handle_decision(decision, player)
         end
 
-        break if round_finished?
+        break if round_over?
       end
-    end
-
-    def result
-      return nil if draw?
-
-      determine_winner
     end
 
     private
 
+    def prepare_players
+      discard_cards
+      deal_initial_cards
+    end
+
+    def discard_cards = players.each(&:discard_cards)
+    def deal_initial_cards = 2.times { players.each { |player| player.take_card(deck.give_card) } }
+
     def status_bar
+      Interface.clear
       players.each { |player| player.is_a?(Dealer) ? player.show_status(hidden: true) : player.show_status }
       Interface.separator
     end
 
-    def finish!
-      @status = 1
-    end
-
-    def round_finished?
-      !status.zero? || players_exceed_score_limit? || players_exceed_card_limit?
-    end
+    def finish! = @finished = true
+    def finished? = @finished
+    def round_over? = finished? || exceed_score_limit? || exceed_card_limit?
 
     def handle_decision(decision, player)
       case decision
       when :take_card then player.take_card(deck.give_card)
       when :show_cards then finish!
       when :skip then nil
+      else nil
       end
     end
 
-    def players_exceed_score_limit?
-      players.map(&:scores).min > 21
-    end
-
-    def players_exceed_card_limit?
-      players.map(&:card_size).all? { |card_size| card_size > 2 }
-    end
-
-    def determine_winner
-      valid_players = players.select { |player| player.scores <= 21 }
-
-      return valid_players.max_by(&:scores) if valid_players.any?
-
-      players.min_by(&:scores)
-    end
-
-    def draw?
-      players.map(&:scores).uniq.size == 1
-    end
+    def exceed_score_limit? = players.map(&:scores).min > 21
+    def exceed_card_limit? = players.map(&:card_size).all? { |card_size| card_size > 2 }
   end
 end

@@ -9,10 +9,6 @@ module BlackJack
       action_mapping[chosen_action]
     end
 
-    private
-
-    def default_name
-      'Аноним'
-    end
+    private def default_name = 'Аноним'
   end
 end

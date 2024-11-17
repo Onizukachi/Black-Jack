@@ -1,9 +1,7 @@
 module BlackJack
   class Dealer < Player
-    private
+    def make_move = card_size < 3 && scores < 17 ? :take_card : :skip
 
-    def default_name
-      'Дилер'
-    end
+    private def default_name = 'Дилер'
   end
 end

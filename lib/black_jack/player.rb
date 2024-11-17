@@ -14,26 +14,13 @@ module BlackJack
       hidden ? Interface.hidden_player_status(self) : Interface.open_player_status(self)
     end
 
-    def card_size
-      cards.size
-    end
-
     # @return [Symbol] will be one of the following values [:skip, :take_card, :show_cards]
-    def make_move
-      card_size < 3 && scores < 17 ? :take_card : :skip
-    end
-
-    def take_card(card)
-      cards.push(card)
-    end
-
-    def discard_cards
-      cards.clear
-    end
-
-    def take_cache(amount)
-      @bank += amount
-    end
+    def make_move = raise "Not implemented"
+    def card_size = cards.size
+    def take_card(card) = cards.push(card)
+    def discard_cards = cards.clear
+    def take_cache(amount) = @bank += amount
+    def do_bet(amount) = @bank -= amount
 
     def scores
       total = cards.sum(&:value)
@@ -47,14 +34,8 @@ module BlackJack
       total
     end
 
-    def do_bet
-      @bank -= BlackJack.config.default_bet
-    end
-
     private
 
-    def default_name
-      raise 'Not Implemented'
-    end
+    def default_name = raise 'Not Implemented'
   end
 end
