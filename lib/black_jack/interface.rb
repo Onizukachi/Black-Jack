@@ -13,6 +13,8 @@ module BlackJack
       end
 
       def choose_action(player)
+        action_mapping = { 1 => :skip, 2 => :take_card, 3 => :show_cards }
+
         loop do
           puts 'Выберите действие'
           puts '1. Пропустить ход'
@@ -25,7 +27,7 @@ module BlackJack
           valid_actions << 2 if player.card_size < 3
 
           if valid_actions.include?(action)
-            return action
+            return action_mapping[action]
           else
             puts 'Неправильный выбор. Попробуйте снова.'
           end
@@ -57,6 +59,9 @@ module BlackJack
 
       private
 
+      def action_mapping
+
+      end
       def username_part(name) = "Игрок: #{name}"
       def scores_part(scores) = "Очки: #{scores}"
       def open_cards_part(cards) = "Карты: #{cards.join(' ')}"
