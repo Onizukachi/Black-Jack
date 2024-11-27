@@ -2,9 +2,9 @@ module BlackJack
   class Round
     attr_reader :players, :deck
 
-    def initialize(players, deck)
+    def initialize(players)
       @players = players
-      @deck = deck
+      @deck = Deck.new
       @finished = false
     end
 
@@ -23,6 +23,8 @@ module BlackJack
         break if round_over?
       end
     end
+
+    def result = draw? ? :draw : define_winner
 
     private
 
@@ -53,7 +55,15 @@ module BlackJack
       end
     end
 
-    def exceed_score_limit? = players.map(&:scores).min > 21
+    def exceed_score_limit? = players.map(&:scores).max > 21
     def exceed_card_limit? = players.map(&:card_size).all? { |card_size| card_size > 2 }
+
+    def draw? = players.map(&:scores).uniq.size == 1
+
+    def define_winner
+      valid_players = players.select { |player| player.scores <= 21 }
+
+      valid_players.any? ? valid_players.max_by(&:scores) : players.min_by(&:scores)
+    end
   end
 end
