@@ -1,4 +1,4 @@
-module BlackJack
+module BoardGame
   Card = Struct.new(:suit, :rank, keyword_init: true) do
     def to_s
       "#{suit}#{rank}"

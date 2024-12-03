@@ -1,4 +1,4 @@
-module BlackJack
+module BoardGame
   class Interface
     class << self
       def welcome = puts "***Добро пожаловать в игру Блэк Джэк***\n\n"

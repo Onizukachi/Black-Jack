@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-module BlackJack
+module BoardGame
   class Player
     attr_reader :bank, :cards, :name
 
     def initialize(name = nil)
       @name = name || default_name
-      @bank = BlackJack.config.default_user_bank
+      @bank = BoardGame.config.default_user_bank
       @cards = []
     end
 
@@ -21,18 +21,6 @@ module BlackJack
     def discard_cards = cards.clear
     def take_cache(amount) = @bank += amount
     def do_bet(amount) = @bank -= amount
-
-    def scores
-      total = cards.sum(&:value)
-      ace_count = cards.count(&:ace?)
-
-      while ace_count.positive? && total > 21
-        total -= 10
-        ace_count -= 1
-      end
-
-      total
-    end
 
     private
 

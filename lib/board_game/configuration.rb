@@ -1,4 +1,4 @@
-module BlackJack
+module BoardGame
   class Configuration
     attr_accessor :default_user_bank, :default_dealer_bank, :default_bet
 

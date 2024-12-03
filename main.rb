@@ -1,4 +1,4 @@
-require_relative './lib/black_jack'
+require_relative './lib/board_game'
 
-game = BlackJack::Game.new
-game.run
+game = BoardGame::Game.new
+game.start

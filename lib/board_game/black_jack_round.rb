@@ -1,22 +1,26 @@
-module BlackJack
-  class Round
+module BoardGame
+  class BlackJackRound < Round
     attr_reader :players, :deck
 
-    def initialize(players)
+    def initialize(players, deck)
       @players = players
-      @deck = Deck.new
+      @deck = deck
       @finished = false
     end
 
-    def play
-      prepare_players
+    private
 
+    def prepare_for_round
+      discard_cards
+      deal_initial_cards
+    end
+
+    def make_moves
       loop do
         status_bar
 
         players.each do |player|
           decision = player.make_move
-
           handle_decision(decision, player)
         end
 
@@ -24,22 +28,11 @@ module BlackJack
       end
     end
 
-    def result = draw? ? :draw : define_winner
-
-    private
-
-    def prepare_players
-      discard_cards
-      deal_initial_cards
-    end
-
     def discard_cards = players.each(&:discard_cards)
     def deal_initial_cards = 2.times { players.each { |player| player.take_card(deck.give_card) } }
 
     def status_bar
-      Interface.clear
       players.each { |player| player.is_a?(Dealer) ? player.show_status(hidden: true) : player.show_status }
-      Interface.separator
     end
 
     def finish! = @finished = true
@@ -55,10 +48,10 @@ module BlackJack
       end
     end
 
-    def exceed_score_limit? = players.map(&:scores).max > 21
+    def players_score = players.map { |player| CalcPlayerScores.call(player) }
+    def exceed_score_limit? = players_score.max > 21
     def exceed_card_limit? = players.map(&:card_size).all? { |card_size| card_size > 2 }
-
-    def draw? = players.map(&:scores).uniq.size == 1
+    def draw? = players_score.uniq.size == 1
 
     def define_winner
       valid_players = players.select { |player| player.scores <= 21 }
